@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "Ventas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+
+    body {
+        background: #f5f5f5;
+    }
+
+    .rounded-lg {
+        border-radius: 1rem;
+    }
+
+    .nav-pills .nav-link {
+        color: #555;
+    }
+
+    .nav-pills .nav-link.active {
+        color: #fff;
+    }
+</style>
+
+
+
+    <div class="row">
+        <div class="col-lg-7 mx-auto">
+            <div class="bg-white rounded-lg shadow-sm p-2">
+                <!-- Credit card form tabs -->
+                <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-5">
+                    <li class="nav-item">
+                        <a data-toggle="pill" href="#nav-tab-card" class="nav-link active rounded-pill">
+                            <i class="fa fa-credit-card"></i>
+                            Tarjeta de cr&eacute;dito/d&eacute;bito
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        
+                    </li>
+                    <li class="nav-item">
+                        
+                    </li>
+
+                </ul>
+                <!-- End -->
+                <!-- Credit card form content -->
+                <div class="tab-content">
+
+                    <!-- credit card info-->
+                    <div id="nav-tab-card" class="tab-pane fade show active">
+                        
+                            <div class="form-group">
+                                <label for="username">Nombre completo name (on the card)</label>
+                                <input type="text" name="username" placeholder="Jason Doe" required class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="cardNumber">Card number</label>
+                                <div class="input-group">
+                                    <input type="text" data-bind="value: cardInfo.CardNum" name="cardNumber" placeholder="Ingrese su número de tarjeta" class="form-control" required>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text text-muted">
+                                            <i class="fa fa-cc-visa mx-1"></i>
+                                            <i class="fa fa-cc-amex mx-1"></i>
+                                            <i class="fa fa-cc-mastercard mx-1"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label><span class="hidden-xs">Expiraci&oacute;n</span></label>
+                                        <div class="input-group">
+                                            <input type="number" placeholder="MM" data-bind="value: cardInfo.ExpMonth" name="" class="form-control" required>
+                                            <input type="number" placeholder="YY" data-bind="value: cardInfo.ExpYear" name="" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group mb-4">
+                                        <label data-toggle="tooltip" title="Three-digits code on the back of your card">
+                                            CVV
+                                            <i class="fa fa-question-circle"></i>
+                                        </label>
+                                        <input type="text" data-bind="value: cardInfo.CVV" required class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" 
+                                    class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"  
+                                    data-bind=" enable: cardInfo.CardNum() || cardInfo.CVV() || cardInfo.ExpMonth()|| cardInfo.ExpYear() , click: sendCarInfo"> Confirmar  </button>
+                        
+                    </div>
+                </div>
+                <!-- End -->
+
+            </div>
+        </div>
+    </div>
+
+@section Scripts {
+    <script>
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+
+
+        var viewModel = new ViewModel();
+
+        function ViewModel() {
+
+            var self = this;
+
+            self.loadingData = ko.observable(false);
+           
+            self.cardInfo = {
+                CardNum: ko.observable(""),
+                CVV: ko.observable(""),
+                ExpMonth: ko.observable(""),
+                ExpYear: ko.observable(""),
+            }
+
+
+            self.sendCarInfo = function () {
+                $('#myModalCardShopping').modal('hide');
+                self.loadingData(true);
+
+                var myUrl = '@Url.Action("SendCarInfo", "CardInfo")';
+                var carInfoSend =
+                {
+                    CardNum: self.cardInfo.CardNum(),
+                    CVV:self.cardInfo.CVV(),
+                    ExpMonth:self.cardInfo.ExpMonth(),
+                    ExpYear:self.cardInfo.ExpYear(),
+                };
+
+                var details = JSON.stringify(carInfoSend);
+                $.ajax({
+                    type: "POST",
+                    url: myUrl,
+                    data: details,
+                    contentType: "application/json; charset=utf-8",
+                    datatype: "json",
+                    timeout:120000,
+                    success: function (data) {
+
+                        if (data.idProcessed == false) {
+
+                            alert("La orden no ha sido procesada, intente nuevamente por favor");
+                            self.loadingData(false);
+                            $('#myModalCardShopping').modal(optionsLg);
+                            $('#myModalCardShopping').modal('show');
+                            return;
+                        };
+                        if (data.idProcessed == true) {
+                            alert("La orden fue procesada.");
+                            var initUrl = '@Url.Action("Index", "Home")';
+                            window.location.href = initUrl+'?id='+ data.id;
+                            return;
+                        };
+                    },
+                    error: function () {
+
+                        alert("Existió error en la comunicación con el servidor, intente nuevamente por favor");
+                        self.loadingData(false);
+                        $('#myModalCardShopping').modal(optionsLg);
+                        $('#myModalCardShopping').modal('show');
+
+                    }
+                });
+
+            };
+
+        }
+
+        ko.applyBindings(viewModel);
+    </script>
+}
+

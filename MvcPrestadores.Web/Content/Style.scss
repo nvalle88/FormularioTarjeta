@@ -1,0 +1,41 @@
+﻿@import 'sass/conf/conf';
+@import 'sass/bootstrap-overrides/overrides';
+@import 'sass/typography';
+@import 'sass/buttons';
+@import 'sass/icons';
+@import 'sass/layout';
+@import 'sass/socicon';
+@import 'sass/table';
+@import 'sass/ionicons';
+@import 'sass/form';
+@import 'sass/treeView';
+@import 'sass/modal';
+@import 'sass/feed';
+@import 'sass/preloader';
+@import 'sass/fonts';
+@import 'sass/pageTop';
+@import 'sass/baPageTop';
+@import 'sass/_auth';
+
+
+ul.btn-list {
+    margin: 0 0 0 -18px;
+    padding: 0;
+    padding-top: 6px;
+    clear: both;
+
+    li {
+        margin: 0px 0 12px 18px;
+        padding: 0;
+        list-style: none;
+        float: left;
+    }
+}
+
+.data-table-container {
+    width: 100%;
+
+    .panel-heading {
+        margin-top: 25px;
+    }
+}

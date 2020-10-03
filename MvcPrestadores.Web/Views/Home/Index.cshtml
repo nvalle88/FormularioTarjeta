@@ -1,0 +1,19 @@
+﻿
+
+@{
+    ViewBag.Title = "Inicio";
+}
+<div class="container">
+    <p>En estos momentos no podemos procesar su solicitud, gracias</p>
+    <span class="fa fa-wifi"></span>
+</div>
+@section Scripts {
+    <script>
+        var viewModel = new ViewModel();
+        function ViewModel() {
+            var self = this;
+            self.loadingData = ko.observable(false);
+        }
+        ko.applyBindings(viewModel);
+    </script>
+}

@@ -1,0 +1,205 @@
+﻿@font-face {
+    font-family: "fssilassansweb";
+    src: url('assets/fonts/fssilassansweb-regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: fssilassansweb;
+}
+
+body {
+    /*padding-top: 50px;*/
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.search-results {
+    overflow-x: scroll;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    /*max-width: 280px;*/
+}
+
+
+.navbar {
+    background: white !important;
+}
+
+
+.separator {
+    background: transparent !important;
+}
+/**/
+.borderCustom {
+    padding: 8px 10px 8px 10px;
+    border: solid;
+    border-width: 1px;
+    border-color: #d9d9d9 !important;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+
+.img-pequeña {
+    width: 70px;
+    height: auto;
+}
+
+.btn-principal {
+    background-color: #784E9F;
+    color: #ffffff;
+}
+
+.color-principal {
+    color: #784e9f;
+}
+
+.color-principal:hover {
+    color: #784e9f;
+}
+
+.btn-informacion {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+
+.bordeSolido {
+    padding: 8px 10px 8px 10px;
+    border: solid;
+    border-width: 2px !important;
+    border-color: #000000 !important;
+}
+
+.cabecera-estatica th {
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+    background: #ffffff;
+}
+
+.tabla-estatica {
+    overflow-y: scroll;
+    height: 100%;
+    max-height: 300px
+}
+
+.cuadro {
+    width: 20px;
+    height: 20px;
+    -ms-border-radius: 25%;
+    border-radius: 25%;
+    margin: auto;
+}
+
+.cuadro-centrado {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.rojo {
+    background: #D52535;
+}
+
+.amarillo {
+    background: #FFCF48;
+}
+
+.verde {
+    background: #08AE50;
+}
+
+.paginacion-activo {
+}
+
+
+
+.textDetail {
+    font-size: 50px;
+    padding-right: 1px;
+}
+
+
+.wrapper {
+    text-align: center;
+}
+
+    .wrapper ul {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        /* For IE, the outcast */
+        zoom: 1;
+        *display: inline;
+    }
+
+    .wrapper li {
+        float: left;
+    }
+
+
+
+
+.search-results {
+    overflow: scroll;
+    overflow-x: hidden;
+    background: transparent;
+}
+
+
+.card-body1 {
+    background: transparent;
+    max-height: 350px;
+}
+
+.table tr.active td {
+    background-color: #1899d1 !important;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.Cargando {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    min-height: 100%;
+    min-width: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: #e4e4e9;
+    z-index: 500 !important;
+    opacity: 0.8;
+    overflow: hidden;
+}
+
+.center-all {
+    padding: 50%;
+    margin: -8px;
+    width: 16px;
+    height: 16px;
+}
+
+.navbar {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
