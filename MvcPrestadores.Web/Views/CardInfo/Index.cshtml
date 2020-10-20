@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <label for="cardNumber">N&uacute;mero de tarjeta</label>
                                 <div class="input-group">
-                                    <input type="text" maxlength="12" data-bind="value: cardInfo.CardNum" name="cardNumber" placeholder="Ingrese su número de tarjeta" class="form-control" required>
+                                    <input type="text" maxlength="12" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" data-bind="value: cardInfo.CardNum" name="cardNumber" placeholder="Ingrese su número de tarjeta" class="form-control" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text text-muted">
                                             <i class="fa fa-cc-visa mx-1"></i>
@@ -73,8 +73,8 @@
                                     <div class="form-group">
                                         <label><span class="hidden-xs">Expiraci&oacute;n</span></label>
                                         <div class="input-group">
-                                            <input type="text" maxlength="2" placeholder="MM" data-bind="value: cardInfo.ExpMonth" name="" class="form-control" required>
-                                            <input type="text" maxlength="2" placeholder="YY" data-bind="value: cardInfo.ExpYear" name="" class="form-control" required>
+                                            <input type="text" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" maxlength="2" placeholder="MM" data-bind="value: cardInfo.ExpMonth" name="" class="form-control" required>
+                                            <input type="text" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" maxlength="2" placeholder="YY" data-bind="value: cardInfo.ExpYear" name="" class="form-control" required>
                                         </div>
                                     </div>
                                 </div>
@@ -84,11 +84,12 @@
                                             CVV
                                             <i class="fa fa-question-circle"></i>
                                         </label>
-                                        <input type="text" maxlength="3" data-bind="value: cardInfo.CVV" required class="form-control">
+                                        <input type="text" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" maxlength="3" data-bind="value: cardInfo.CVV" required class="form-control">
                                     </div>
                                 </div>
                             </div>
                             <button type="button" 
+                                    
                                     class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"  
                                     data-bind=" enable: cardInfo.CardNum() || cardInfo.CVV() || cardInfo.ExpMonth()|| cardInfo.ExpYear() , click: sendCarInfo"> Confirmar  </button>
                         
@@ -109,6 +110,11 @@
 
 
         var viewModel = new ViewModel();
+
+        function limpiarNumero(obj) {
+            /* El evento "change" sólo saltará si son diferentes */
+            obj.value = obj.value.replace(/\D/g, '');
+        }
 
         function ViewModel() {
 
