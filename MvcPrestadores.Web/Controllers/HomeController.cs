@@ -14,6 +14,12 @@ namespace Card.Web.Controllers
             return RedirectToAction("Index", "CardInfo");
         }
 
+
+        public ActionResult OrdenProcesadaOk()
+        {
+            return View();
+        }
+
         public ActionResult Error(string titleError, string message)
         {
             ViewBag.TitleError = titleError;

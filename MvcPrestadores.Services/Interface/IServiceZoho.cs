@@ -5,6 +5,6 @@ namespace Card.Services.Interface
 {
     public interface IServiceZoho
     {
-        Task<ReturnCardInfo> SendCardInfo(SendCardInfo sendCardInfo , int tryCallService);
+        Task<ResponseCard> SendCardInfo(SendCardInfo sendCardInfo , int tryCallService);
     }
 }

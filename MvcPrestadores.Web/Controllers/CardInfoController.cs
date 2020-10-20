@@ -16,6 +16,9 @@ namespace Card.Web.Controllers
         }
         public async Task<ActionResult> Index()
         {
+            var idCustomerSession = System.Web.HttpContext.Current.Session["idCustomerSession"] as string;
+            if (string.IsNullOrWhiteSpace(idCustomerSession))
+                return RedirectToAction("Error", "Home", new { titleError = "Petición incorrecta", message = "La petición no ha sido enviada correctamente" });
             return View();
         }
 
@@ -29,19 +32,28 @@ namespace Card.Web.Controllers
         {
             var idCustomerSession = System.Web.HttpContext.Current.Session["idCustomerSession"] as string;
             if (string.IsNullOrWhiteSpace(idCustomerSession))
-                return RedirectToAction("Error", "Home", new { titleError = "Sección expirada", message = "La sección ha espirado" });
+                return Json(new
+                {
+                    IsSuccess = false,
+                    Message = "Sección Expirada",
+                    SessionExpirer = true,
+                    id = idCustomerSession,
+                },
+                JsonRequestBehavior.AllowGet);
 
             System.Web.HttpContext.Current.Session["idCustomerSession"] = idCustomerSession;
             System.Web.HttpContext.Current.Session.Timeout = 2160;
 
             sendCardInfo.ExpDate = $"{sendCardInfo.ExpMonth}/{sendCardInfo.ExpYear}";
             sendCardInfo.Id = idCustomerSession;
-            var idProcessed = await _serviceZoho.SendCardInfo(sendCardInfo,1);
+            var response = await _serviceZoho.SendCardInfo(sendCardInfo, 1);
 
             return Json(new
             {
-                idProcessed,
-                id=idCustomerSession,
+                response.IsSuccess,
+                response.Message,
+                SessionExpirer=false,
+                id = idCustomerSession,
             },
             JsonRequestBehavior.AllowGet);
         }

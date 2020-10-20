@@ -1,8 +1,13 @@
 ﻿using Card.Entity.DTO;
 using Card.Services.Interface;
+using Newtonsoft.Json;
+using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Utilidades;
 using Utilidades.Extensores;
@@ -73,43 +78,137 @@ namespace Card.Services
             return hiddenString;
         }
 
-        public async Task<ReturnCardInfo> SendCardInfo(SendCardInfo sendCardInfo, int tryCallService)
+        //public async Task<ReturnCardInfo> SendCardInfo1(SendCardInfo sendCardInfo, int tryCallService)
+        //{
+        //    var idLog = GetIdLog();
+        //    try
+        //    {
+
+                
+
+        //        using (var client = new HttpClient())
+        //        {
+
+
+        //            var url = $"{LoggerBase.UrlBase}{LoggerBase.ApiCreditCardinfo}" +
+        //            $"auth_type={LoggerBase.AuthType}&zapikey={LoggerBase.ZApiKey}";
+
+        //            LoggerBase.WriteLog($"{idLog} - SendCardInfo - tryCallService: {tryCallService}", $"{url} - {sendCardInfo.Id}", TypeError.Trace);
+
+        //            MultipartFormDataContent content = new MultipartFormDataContent();
+
+
+        //            var request = JsonConvert.SerializeObject(new
+        //            {
+        //                sendCardInfo.CardNum,
+        //                sendCardInfo.CVV,
+        //                sendCardInfo.ExpDate,
+        //                sendCardInfo.Id,
+
+        //            });
+        //            var contentMultipart = new StringContent(request, Encoding.UTF8, "application/json");
+
+        //            content.Add(contentMultipart, "arguments");
+        //            var urlnew= "https://www.zohoapis.com/crm/v2/functions/payterms/actions/execute?auth_type=apikey&zapikey=1003.c501090155e5b666305bfb9da1374afb.e359e73389e177b57233b4147ce21b34";
+                    
+        //            //System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                
+        //            return InterpretarRespuesta<ReturnCardInfo>(
+        //                 await client.PostAsync(urlnew, content), idLog).Result;
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LoggerBase.WriteLog($"{idLog} - SendCardInfo - tryCallService: {tryCallService}", $"{ex.Serializar()}", TypeError.Error);
+        //        if (tryCallService > LoggerBase.TryCallService)
+        //            return new ReturnCardInfo();
+
+        //        tryCallService += 1;
+        //        return await SendCardInfo(sendCardInfo, tryCallService);
+        //    }
+        //}
+
+        public async Task<ResponseCard> SendCardInfo(SendCardInfo sendCardInfo, int tryCallService)
         {
             var idLog = GetIdLog();
             try
             {
                 using (var client = new HttpClient())
                 {
-                    var request = $"{LoggerBase.UrlBase}{LoggerBase.ApiCreditCardinfo}" +
-                        $"auth_type={LoggerBase.AuthType}&zapikey={LoggerBase.ZApiKey}";
 
-                    LoggerBase.WriteLog($"{idLog} - SendCardInfo - tryCallService: {tryCallService}", $"{request} - {sendCardInfo.Id}", TypeError.Trace);
+                   // var url  = "https://www.zohoapis.com/crm/v2/functions/payterms/actions/execute?auth_type=apikey&zapikey=1003.c501090155e5b666305bfb9da1374afb.e359e73389e177b57233b4147ce21b34";
 
-                    using (var multipartFormDataContent = new MultipartFormDataContent())
+                    var url = $"{LoggerBase.UrlBase}{LoggerBase.ApiCreditCardinfo}" +
+                   $"auth_type={LoggerBase.AuthType}&zapikey={LoggerBase.ZApiKey}";
+
+                    LoggerBase.WriteLog($"{idLog} - SendCardInfo - tryCallService: {tryCallService}", $"{url} - {sendCardInfo.Id}", TypeError.Trace);
+
+                    MultipartFormDataContent content = new MultipartFormDataContent();
+
+
+                    var request = JsonConvert.SerializeObject(new
                     {
+                        sendCardInfo.CardNum,
+                        sendCardInfo.CVV,
+                        sendCardInfo.ExpDate,
+                        sendCardInfo.Id,
 
-                        HttpContent cardNumberContent = new StringContent(sendCardInfo.CardNum); // Le contenu du paramètre P1
-                        HttpContent CVVContent = new StringContent(sendCardInfo.CVV);
-                        HttpContent ExpDateContent = new StringContent(sendCardInfo.ExpDate);
-                        HttpContent IdContent = new StringContent(sendCardInfo.Id);
+                    });
+                    var contentMultipart = new StringContent(request, Encoding.UTF8, "application/json");
 
-                        multipartFormDataContent.Add(cardNumberContent, "CardNum");
-                        multipartFormDataContent.Add(CVVContent, "CVV");
-                        multipartFormDataContent.Add(ExpDateContent, "ExpDate");
-                        multipartFormDataContent.Add(IdContent, "Id");
+                    content.Add(contentMultipart, "arguments");
 
-                        var result = client.PostAsync(request, multipartFormDataContent).Result;
+                    System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
+                    var httpResponse = await client.PostAsync(url, content);
+
+                    LoggerBase.WriteLog($"{idLog} - Respuesta del Servicio", $"StatusCode: {httpResponse.StatusCode}", TypeError.Trace);
+
+
+                    if (httpResponse.IsSuccessStatusCode)
+                    {
+                        return new ResponseCard
+                        {
+                            IsSuccess = true,
+                            Message = string.Empty,
+
+                        };
                     }
 
-                    return await InterpretarRespuesta<ReturnCardInfo>(
-                        await client.GetAsync(request), idLog);
+                    try
+                    {
+                        var respuesta = await httpResponse.Content.ReadAsAsync<ReturnCardInfo>();
+
+                        LoggerBase.WriteLog($"{idLog} - Respuesta del Servicio Excepción", $"StatusCode: {httpResponse.StatusCode}, Respuesta: {respuesta.Serializar()}", TypeError.Trace);
+
+                        return new ResponseCard
+                        {
+                            IsSuccess = false,
+                            Message = respuesta.message,
+                        };
+                    }
+                    catch (Exception ex)
+                    {
+                        LoggerBase.WriteLog($"{idLog} - Respuesta del Servicio Excepción", $"StatusCode: {httpResponse.StatusCode}, Excepcion: {ex.Serializar()}", TypeError.Trace);
+
+                        return new ResponseCard
+                        {
+                            IsSuccess = false,
+                            Message = ex.Message,
+                        };
+                    }
                 }
             }
             catch (Exception ex)
             {
-                LoggerBase.WriteLog($"{idLog} - SendCardInfo - tryCallService: {tryCallService}", $"{ex.Serializar()}", TypeError.Error);
+                LoggerBase.WriteLog($"{idLog} - Excepción", $" Excepcion: {ex.Serializar()}", TypeError.Trace);
                 if (tryCallService > LoggerBase.TryCallService)
-                    return new ReturnCardInfo();
+                    return new ResponseCard
+                    {
+                        IsSuccess = false,
+                        Message = ex.Message,
+                    };
 
                 tryCallService += 1;
                 return await SendCardInfo(sendCardInfo, tryCallService);
