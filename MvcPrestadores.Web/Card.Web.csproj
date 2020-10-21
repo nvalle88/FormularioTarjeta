@@ -231,6 +231,7 @@
     <Content Include="Content\assets\icon\groups\icon-group-ubicacion.png" />
     <Content Include="Content\assets\icon\groups\icon-group-vallas.png" />
     <Content Include="Content\assets\icon\ms-icon-144x144.png" />
+    <Content Include="Content\assets\images\cvv-graphic.png" />
     <Content Include="Content\assets\images\logo-metro.jpg" />
     <Content Include="Content\assets\img\app\browsers\chrome.svg" />
     <Content Include="Content\assets\img\app\browsers\firefox.svg" />
@@ -2013,6 +2014,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\OrdenProcesadaOk.cshtml" />
+    <Content Include="Views\Home\ErrorRespuestaServicio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

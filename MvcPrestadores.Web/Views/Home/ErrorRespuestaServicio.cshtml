@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Error en la respuesta del servicio";
+}
+
+
+
+<div class="row">
+    <div class="col-lg-7 mx-auto">
+        <div class="bg-white rounded-lg shadow-sm p-2">
+           
+            <div class="tab-content">
+                <div id="nav-tab-card" class="tab-pane fade show active">
+
+                    <div class="form-group">
+                        <h2 style="color:red" >La solicitud no fue procesada.</h2>
+                        <h3 style="color:red"><b>Descripci&oacute;n: @ViewBag.MessageError</b></h3>
+                    </div>
+                   
+                    <button type="button"
+                            class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"
+                            data-bind="click: newSendCarInfo">
+                        Nueva tarjeta
+                    </button>
+
+                </div>
+            </div>
+            <!-- End -->
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var viewModel = new ViewModel();
+        function ViewModel() {
+            var self = this;
+
+            self.loadingData = ko.observable(false);
+
+            self.newSendCarInfo = function ()
+            {
+                self.loadingData(false);
+                var initUrl = '@Url.Action("Index", "CardInfo")';
+                window.location.href = initUrl;
+                return;
+            }
+        }
+        ko.applyBindings(viewModel);
+    </script>
+}

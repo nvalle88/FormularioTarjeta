@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script src="~/Scripts/umd/popper.js"></script>
+
 <style type="text/css">
 
     body {
@@ -18,102 +20,124 @@
         color: #555;
     }
 
-    .nav-pills .nav-link.active {
-        color: #fff;
+        .nav-pills .nav-link.active {
+            color: #fff;
+        }
+
+    .cart {
+        overflow: hidden;
+        padding: 30px 3px;
+        background: yellow;
     }
 </style>
 
 
 
-    <div class="row">
-        <div class="col-lg-7 mx-auto">
-            <div class="bg-white rounded-lg shadow-sm p-2">
-                <!-- Credit card form tabs -->
-                <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-5">
-                    <li class="nav-item">
-                        <a data-toggle="pill" href="#nav-tab-card" class="nav-link active rounded-pill">
-                            <i class="fa fa-credit-card"></i>
-                            Tarjeta de cr&eacute;dito/d&eacute;bito
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        
-                    </li>
-                    <li class="nav-item">
-                        
-                    </li>
+<div class="row">
+    <div class="col-lg-7 mx-auto">
+        <div class="bg-white rounded-lg shadow-sm p-2">
+            <!-- Credit card form tabs -->
+            <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-5">
+                <li class="nav-item">
+                    <a data-toggle="pill" href="#nav-tab-card" class="nav-link active rounded-pill">
+                        <i class="fa fa-credit-card"></i>
+                        Tarjeta de cr&eacute;dito/d&eacute;bito
+                    </a>
+                </li>
+                <li class="nav-item">
 
-                </ul>
-                <!-- End -->
-                <!-- Credit card form content -->
-                <div class="tab-content">
+                </li>
+                <li class="nav-item">
 
-                    <!-- credit card info-->
-                    <div id="nav-tab-card" class="tab-pane fade show active">
-                        
-                            <div class="form-group">
-                                <label for="username">Nombre completo en la tarjera</label>
-                                <input type="text" name="username" placeholder="Jason Doe" required class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="cardNumber">N&uacute;mero de tarjeta</label>
-                                <div class="input-group">
-                                    <input type="text" maxlength="12" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" data-bind="value: cardInfo.CardNum" name="cardNumber" placeholder="Ingrese su número de tarjeta" class="form-control" required>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text text-muted">
-                                            <i class="fa fa-cc-visa mx-1"></i>
-                                            <i class="fa fa-cc-amex mx-1"></i>
-                                            <i class="fa fa-cc-mastercard mx-1"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <label><span class="hidden-xs">Expiraci&oacute;n</span></label>
-                                        <div class="input-group">
-                                            <input type="text" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" maxlength="2" placeholder="MM" data-bind="value: cardInfo.ExpMonth" name="" class="form-control" required>
-                                            <input type="text" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" maxlength="2" placeholder="YY" data-bind="value: cardInfo.ExpYear" name="" class="form-control" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group mb-4">
-                                        <label title="Three-digits code on the back of your card">
-                                            CVV
-                                            <i class="fa fa-question-circle"></i>
-                                        </label>
-                                        <input type="text" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" maxlength="3" data-bind="value: cardInfo.CVV" required class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="button" 
-                                    
-                                    class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"  
-                                    data-bind=" enable: cardInfo.CardNum() || cardInfo.CVV() || cardInfo.ExpMonth()|| cardInfo.ExpYear() , click: sendCarInfo"> Confirmar  </button>
-                        
+                </li>
+
+            </ul>
+            <!-- End -->
+            <!-- Credit card form content -->
+            <div class="tab-content">
+
+                <!-- credit card info-->
+                <div id="nav-tab-card" class="tab-pane fade show active">
+
+                    <div class="form-group">
+                        <label for="username">Nombre completo en la tarjera</label>
+                        <input type="text" onkeyup="limpiarNombre(this)" onchange="limpiarNombre(this)" id="nameCardId" data-bind="value: cardInfo.NameCard" name="username" placeholder="Jason Doe" required class="form-control">
                     </div>
-                </div>
-                <!-- End -->
+                    <div class="form-group">
+                        <label for="cardNumber">N&uacute;mero de tarjeta</label>
+                        <div class="input-group">
+                            <input id="cardNumberId" type="text" maxlength="16" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" data-bind="value: cardInfo.CardNum" name="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" class="form-control" required>
+                            <div class="input-group-append">
+                                <span class="input-group-text text-muted">
+                                    <i class="fa fa-cc-visa mx-1"></i>
+                                    <i class="fa fa-cc-amex mx-1"></i>
+                                    <i class="fa fa-cc-mastercard mx-1"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label><span class="hidden-xs">Expiraci&oacute;n</span></label>
+                                <div class="input-group">
+                                    <input type="text" id="ExpMonthId" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" maxlength="2" placeholder="MM" data-bind="value: cardInfo.ExpMonth" name="" class="form-control" required>
+                                    <input type="text" id="ExpYearId" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" maxlength="4" placeholder="YYYY" data-bind="value: cardInfo.ExpYear" name="" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group mb-4">
+                                <label data-toggle="tooltip" title="<img class='img-thumbnail' src='https://mycnsc.com/images/cvv-graphic.png' />">
+                                    CVV
+                                    <i class="fa fa-question-circle"></i>
+                                </label>
+                                <br />
+                                <input type="text" id="CVVId" placeholder="XXX" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" maxlength="3" data-bind="value: cardInfo.CVV" required class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button"
+                            class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"
+                            data-bind="click: sendCarInfo">
+                        Confirmar
+                    </button>
 
+                </div>
             </div>
+            <!-- End -->
+
         </div>
     </div>
+</div>
 
 @section Scripts {
     <script>
 
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
+        $('#panelCVV [data-toggle="tooltip"]').tooltip({
+            animated: 'fade',
+            placement: 'bottom',
+            html: true
+        });
+
+        $('label[data-toggle="tooltip"]').tooltip({
+            animated: 'fade',
+            placement: 'bottom',
+            html: true
+        });
 
 
         var viewModel = new ViewModel();
 
         function limpiarNumero(obj) {
-            /* El evento "change" sólo saltará si son diferentes */
+        /* El evento "change" sólo saltará si son diferentes */
+            $(obj).css("border", "1px solid #cbcbcb");
             obj.value = obj.value.replace(/\D/g, '');
+        }
+
+        function limpiarNombre(obj) {
+            /* El evento "change" sólo saltará si son diferentes */
+            $(obj).css("border", "1px solid #cbcbcb");
         }
 
         function ViewModel() {
@@ -123,27 +147,71 @@
             self.loadingData = ko.observable(false);
 
             self.cardInfo = {
+                NameCard: ko.observable(""),
                 CardNum: ko.observable(""),
                 CVV: ko.observable(""),
                 ExpMonth: ko.observable(""),
                 ExpYear: ko.observable(""),
             }
 
+            self.validarDatos = function (card)
+            {
+                var error = false;
+
+                if (card.NameCard == "") {
+                    $("#nameCardId").css("border", "1px solid red");
+                    error = true;
+                }
+
+                if (card.CardNum.length != 16) {
+                    $("#cardNumberId").css("border", "1px solid red");
+                    error = true;
+                }
+
+                if (card.CVV.length != 3) {
+                    $("#CVVId").css("border", "1px solid red");
+                    error = true;
+                }
+
+                if (card.ExpMonth.length != 2) {
+                    $("#ExpMonthId").css("border", "1px solid red");
+                    error = true;
+                }
+
+                if (card.ExpYear.length != 4) {
+                    $("#ExpYearId").css("border", "1px solid red");
+                    error = true;
+                }
+
+
+                return error;
+            }
 
             self.sendCarInfo = function () {
-                $('#myModalCardShopping').modal('hide');
-                self.loadingData(true);
 
-                var myUrl = '@Url.Action("SendCarInfo", "CardInfo")';
+
                 var carInfoSend =
                 {
+                    NameCard: self.cardInfo.NameCard(),
                     CardNum: self.cardInfo.CardNum(),
                     CVV:self.cardInfo.CVV(),
                     ExpMonth:self.cardInfo.ExpMonth(),
                     ExpYear:self.cardInfo.ExpYear(),
                 };
 
+                var existeError = self.validarDatos(carInfoSend);
+                if (existeError == true) {
+
+                    return;
+                }
+
+
+                self.loadingData(true);
+
+
+
                 var details = JSON.stringify(carInfoSend);
+                 var myUrl = '@Url.Action("SendCarInfo", "CardInfo")';
                 $.ajax({
                     type: "POST",
                     url: myUrl,
@@ -152,7 +220,7 @@
                     datatype: "json",
                     timeout:120000,
                     success: function (data) {
-                        
+
                         if (data.IsSuccess == false) {
                             if (data.SessionExpirer == true) {
                                 self.loadingData(true);
@@ -161,12 +229,11 @@
                                 window.location.href = initUrl + '?titleError=Petición incorrecta &message=La petición no ha sido enviada correctamente, Sección expirada';
                                 return;
                             }
-                            alert(data.Message);
+                            var initUrl = '@Url.Action("ErrorRespuestaServicio", "Home")';
+                            window.location.href = initUrl + '?message=' + data.Message ;
                             return;
                         };
                         if (data.IsSuccess == true) {
-                            self.loadingData(true);
-                            alert("La información fue procesada satisfactoriamente.");
                             var initUrl = '@Url.Action("OrdenProcesadaOk", "Home")';
                             window.location.href = initUrl;
                             return;

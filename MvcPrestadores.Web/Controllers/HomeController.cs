@@ -20,6 +20,12 @@ namespace Card.Web.Controllers
             return View();
         }
 
+        public ActionResult ErrorRespuestaServicio(string message)
+        {
+            ViewBag.MessageError = message;
+            return View();
+        }
+
         public ActionResult Error(string titleError, string message)
         {
             ViewBag.TitleError = titleError;

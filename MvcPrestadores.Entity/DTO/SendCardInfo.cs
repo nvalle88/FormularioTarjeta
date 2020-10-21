@@ -2,6 +2,7 @@
 {
     public class SendCardInfo
     {
+        public string NameCard { get; set; }
         public string CardNum { get; set; }
         public string CVV { get; set; }
         public string ExpDate { get; set; }

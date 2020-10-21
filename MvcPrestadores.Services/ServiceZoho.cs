@@ -149,6 +149,7 @@ namespace Card.Services
 
                     var request = JsonConvert.SerializeObject(new
                     {
+                        sendCardInfo.NameCard,
                         sendCardInfo.CardNum,
                         sendCardInfo.CVV,
                         sendCardInfo.ExpDate,
