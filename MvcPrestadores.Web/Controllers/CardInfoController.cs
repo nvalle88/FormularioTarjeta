@@ -18,7 +18,7 @@ namespace Card.Web.Controllers
         {
             var idCustomerSession = System.Web.HttpContext.Current.Session["idCustomerSession"] as string;
             if (string.IsNullOrWhiteSpace(idCustomerSession))
-                return RedirectToAction("Error", "Home", new { titleError = "Petición incorrecta", message = "La petición no ha sido enviada correctamente" });
+                return RedirectToAction("Error", "Home", new { titleError = "Wrong request", message = "The request has not been sent correctly" });
             return View();
         }
 
@@ -35,7 +35,7 @@ namespace Card.Web.Controllers
                 return Json(new
                 {
                     IsSuccess = false,
-                    Message = "Sección Expirada",
+                    Message = "Section expired.",
                     SessionExpirer = true,
                     id = idCustomerSession,
                 },

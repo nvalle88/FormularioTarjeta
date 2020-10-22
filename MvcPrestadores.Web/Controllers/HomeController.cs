@@ -7,7 +7,7 @@ namespace Card.Web.Controllers
         public ActionResult Index(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
-                return RedirectToAction("Error", "Home", new { titleError = "Petición incorrecta", message = "La petición no ha sido enviada correctamente" });
+                return RedirectToAction("Error", "Home", new { titleError = "Wrong request", message = "The request has not been sent correctly" });
 
             System.Web.HttpContext.Current.Session["idCustomerSession"] = id;
             System.Web.HttpContext.Current.Session.Timeout = 2160;
