@@ -232,7 +232,7 @@
     <Content Include="Content\assets\icon\groups\icon-group-vallas.png" />
     <Content Include="Content\assets\icon\ms-icon-144x144.png" />
     <Content Include="Content\assets\images\cvv-graphic.png" />
-    <Content Include="Content\assets\images\logo-metro.jpg" />
+    <Content Include="Content\assets\images\logo.jpeg" />
     <Content Include="Content\assets\img\app\browsers\chrome.svg" />
     <Content Include="Content\assets\img\app\browsers\firefox.svg" />
     <Content Include="Content\assets\img\app\browsers\ie.svg" />

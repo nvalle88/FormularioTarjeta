@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Error en la respuesta del servicio";
+    ViewBag.Title = "Error services";
 }
 
 
@@ -12,14 +12,14 @@
                 <div id="nav-tab-card" class="tab-pane fade show active">
 
                     <div class="form-group">
-                        <h2 style="color:red" >La solicitud no fue procesada.</h2>
-                        <h3 style="color:red"><b>Descripci&oacute;n: @ViewBag.MessageError</b></h3>
+                        <h2 style="color:red" >Error.</h2>
+                        <h3 style="color:red"><b>Description: @ViewBag.MessageError</b></h3>
                     </div>
                    
                     <button type="button"
                             class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"
                             data-bind="click: newSendCarInfo">
-                        Nueva tarjeta
+                        New card
                     </button>
 
                 </div>

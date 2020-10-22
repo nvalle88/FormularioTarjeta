@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Ventas";
+    ViewBag.Title = "Payment Information";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -41,7 +41,7 @@
                 <li class="nav-item">
                     <a data-toggle="pill" href="#nav-tab-card" class="nav-link active rounded-pill">
                         <i class="fa fa-credit-card"></i>
-                        Tarjeta de cr&eacute;dito/d&eacute;bito
+                        Payment Information
                     </a>
                 </li>
                 <li class="nav-item">
@@ -60,11 +60,11 @@
                 <div id="nav-tab-card" class="tab-pane fade show active">
 
                     <div class="form-group">
-                        <label for="username">Nombre completo en la tarjera</label>
+                        <label for="username">Full name on a card</label>
                         <input type="text" onkeyup="limpiarNombre(this)" onchange="limpiarNombre(this)" id="nameCardId" data-bind="value: cardInfo.NameCard" name="username" placeholder="Jason Doe" required class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="cardNumber">N&uacute;mero de tarjeta</label>
+                        <label for="cardNumber">Card number (the 16 digits on front on you card) </label>
                         <div class="input-group">
                             <input id="cardNumberId" type="text" maxlength="16" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" data-bind="value: cardInfo.CardNum" name="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" class="form-control" required>
                             <div class="input-group-append">
@@ -79,7 +79,7 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <div class="form-group">
-                                <label><span class="hidden-xs">Expiraci&oacute;n</span></label>
+                                <label><span class="hidden-xs">Expiration date</span></label>
                                 <div class="input-group">
                                     <input type="text" id="ExpMonthId" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" maxlength="2" placeholder="MM" data-bind="value: cardInfo.ExpMonth" name="" class="form-control" required>
                                     <input type="text" id="ExpYearId" onkeyup="limpiarNumero(this)" onchange="limpiarNumero(this)" maxlength="4" placeholder="YYYY" data-bind="value: cardInfo.ExpYear" name="" class="form-control" required>
@@ -89,7 +89,7 @@
                         <div class="col-sm-4">
                             <div class="form-group mb-4">
                                 <label data-toggle="tooltip" title="<img class='img-thumbnail' src='https://mycnsc.com/images/cvv-graphic.png' />">
-                                    CVV
+                                    CVV2/CVC2 (the last 3 digits displayed on the back on your card )
                                     <i class="fa fa-question-circle"></i>
                                 </label>
                                 <br />
@@ -100,7 +100,7 @@
                     <button type="button"
                             class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"
                             data-bind="click: sendCarInfo">
-                        Confirmar
+                        Complete transaction
                     </button>
 
                 </div>
@@ -226,7 +226,7 @@
                                 self.loadingData(true);
                                 alert("Sección expirada.");
                                 var initUrl = '@Url.Action("Error", "Home")';
-                                window.location.href = initUrl + '?titleError=Petición incorrecta &message=La petición no ha sido enviada correctamente, Sección expirada';
+                                window.location.href = initUrl + '?titleError=Wrong request &message=The request has not been sent correctly, Section expired.';
                                 return;
                             }
                             var initUrl = '@Url.Action("ErrorRespuestaServicio", "Home")';
@@ -241,7 +241,7 @@
                     },
                     error: function () {
                         self.loadingData(false);
-                        alert("Existió error en la comunicación con el servidor, intente nuevamente por favor");
+                        alert("There was an error in communication with the server, please try again");
                         return;
                     }
                 });
